@@ -4,18 +4,21 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 @Entity({name: 'cliente'})
 export class Cliente {
     @PrimaryGeneratedColumn()
-    id:number
+    id:number;
 
     @Column()
-    nome:string
+    nome:string;
 
     @IsEmail()
-    email:string
+    email:string;
 
     @Column()
-    plano:string
+    plano:string;
 
     @Column()
-    dataDeMatricula:Date
+    matricula:string;
+
+    @Column()
+    dataDeMatricula:Date;
 
 }

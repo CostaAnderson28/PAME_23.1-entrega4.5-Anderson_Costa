@@ -1,15 +1,16 @@
-import { Min } from "class-validator";
+
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
 
 @Entity({name: 'usuario'})
 export class Usuario {
     @PrimaryGeneratedColumn()
     id:number;
 
-    @Column()
+    @Column({name: 'username'})
     nomeDeUsuario:string;
 
-    @Column()
+    @Column({name: 'password'})
     hashSenha:string;
 
     @Column()

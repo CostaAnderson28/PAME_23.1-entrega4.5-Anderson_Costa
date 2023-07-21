@@ -3,5 +3,5 @@ import { config } from 'dotenv';
 config();
 
 export const jwtConstants = {
-    secret: process.env.JWT_PRIVATEKEY,
+    secret: 'TESTE_DE_TOKEN'//process.env.JWT_PRIVATEKEY,
 };
