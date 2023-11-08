@@ -14,7 +14,7 @@ export class AuthService {
     const {nomeDeUsuario, senha} = loginDto
     const usuario = await this.usuarioService.buscaPorUsuario(nomeDeUsuario);
     if(!usuario){
-      throw new NotFoundException('Usuario "'+nomeDeUsuario+'" não encontrado!');
+      throw new NotFoundException(`Usuario '${nomeDeUsuario}' não encontrado!`);
     }
     const vrf_senha = await bcrypt.compare(
       senha, 

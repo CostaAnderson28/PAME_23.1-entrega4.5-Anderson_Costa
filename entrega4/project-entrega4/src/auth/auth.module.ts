@@ -9,12 +9,13 @@ import { Usuario } from 'src/usuario/entities/usuario.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioService } from 'src/usuario/usuario.service';
 import { LocalStrategy } from './local.strategy';
+import { JwtStrategy } from './jwt.strategy';
 
 
 @Module({
   imports:[UsuarioModule, PassportModule,JwtModule.register({secret: jwtConstants.secret, signOptions:{expiresIn: '1 day'}})],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService]
 })
 export class AuthModule {}

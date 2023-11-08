@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CadastroUsuarioDto} from './dto/cadastrousuario.dto';
 import { UpdateUsuarioDto } from './dto/updateusuario.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './entities/usuario.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt'
+import { Cargo } from './entities/role.enum';
 
 @Injectable()
 export class UsuarioService {
@@ -26,10 +27,16 @@ export class UsuarioService {
 
   async create(cadastroUsuarioDto: CadastroUsuarioDto) {
     const hashedPass = await this.encrypt(cadastroUsuarioDto.senha);
+    const role = await cadastroUsuarioDto.cargo
+    if(!Cargo[role]){
+      throw new HttpException({massege: 'cargo inexistente'}, HttpStatus.BAD_REQUEST)
+    }
+    delete cadastroUsuarioDto.cargo
     const newUsuario = this.usuarioRepository.create({
       hashSenha: hashedPass,
       ...cadastroUsuarioDto,
-      datDeAdmicao: new Date
+      datDeAdmicao: new Date,
+      cargo: Cargo[role]
     })
     this.usuarioRepository.save(newUsuario)
     return 'Usuario criado.'
@@ -41,7 +48,7 @@ export class UsuarioService {
   }
 
   async buscaPorUsuario(username:string): Promise<Usuario|undefined> {
-    return this.usuarioRepository.findOneByOrFail({nomeDeUsuario: username})
+    return this.usuarioRepository.findOneBy({nomeDeUsuario: username})
     
   }
 }

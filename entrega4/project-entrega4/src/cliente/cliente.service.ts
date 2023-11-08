@@ -18,20 +18,20 @@ export class ClienteService {
     return this.clinteRepository.find();
   }
 
-  findOne(id: number) {
-    return this.clinteRepository.findOneBy({id});
+  findOne(nome: string) {
+    return this.clinteRepository.findOneBy({nome});
   }
 
-  update(id: number, updateClienteDto: UpdateClienteDto) {
+  update(nome: string, updateClienteDto: UpdateClienteDto) {
     this.clinteRepository.update(
-      {id}, 
+      {nome}, 
       {...updateClienteDto}
     )
     return 'Cliente atualizado.'
   }
 
-  remove(id: number) {
-    this.clinteRepository.delete({id})
-    return `O cliente de id: #${id} foi removido.`;
+  remove(nome: string) {
+    this.clinteRepository.delete({nome})
+    return `O cliente de id: #${nome} foi removido.`;
   }
 }

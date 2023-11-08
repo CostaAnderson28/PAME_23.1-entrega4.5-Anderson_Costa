@@ -1,13 +1,14 @@
 import { Strategy } from "passport-local";
-import { PassportStrategy } from "@nestjs/passport";
+import { PassportModule, PassportStrategy } from "@nestjs/passport";
 import { AuthService } from "./auth.service";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 
+PassportModule.register({session:true})
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy){
     constructor(private authService: AuthService){
         super({
-            usernameFiled: 'nomeDeUsuario',
+            usernameField: 'nomeDeUsuario',
             passwordField: 'senha'
         });
     }
@@ -17,9 +18,7 @@ export class LocalStrategy extends PassportStrategy(Strategy){
             senha
             })
         if(!usuario){
-            throw new UnauthorizedException(
-                {message:'erro aqui'}
-            );
+            throw new UnauthorizedException();
         }
         return usuario;
     }
